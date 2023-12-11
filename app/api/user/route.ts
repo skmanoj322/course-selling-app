@@ -61,6 +61,7 @@ export async function POST(req: Request, res: Response) {
       email: email,
       username: username,
       password: hashedPassword,
+      isAdmin: false,
     },
   });
   const { password: newPassword, ...rest } = newUser;

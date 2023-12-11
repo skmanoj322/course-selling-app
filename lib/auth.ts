@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
-        console.log(credentials);
+
         const parsedInput = signInInput.safeParse(credentials);
 
         const existingUser = await db.user.findUnique({
@@ -46,8 +46,6 @@ export const authOptions: NextAuthOptions = {
         if (!existingUser) {
           return null;
         }
-        console.log("existing user", existingUser.password);
-        console.log("creedintial password", credentials.password);
 
         if (existingUser.password) {
           const passwordMatch = await compare(
@@ -55,12 +53,10 @@ export const authOptions: NextAuthOptions = {
             existingUser.password
           );
 
-          console.log(passwordMatch, "Password_matched");
           if (!passwordMatch) {
             return null;
           }
         }
-        // console.log("passwordOk");
         return {
           id: `${existingUser.id}`,
           username: existingUser?.username,
