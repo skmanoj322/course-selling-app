@@ -1,14 +1,6 @@
-import { TRPCError, initTRPC } from "@trpc/server";
-import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { getServerSession } from "next-auth/next";
+import { initTRPC } from "@trpc/server";
+import { createContext } from "./context";
 
-export const createContext = async (opts: FetchCreateContextFnOptions) => {
-  const session = await getServerSession();
-  console.log(session, opts.req);
-  return {
-    session,
-  };
-};
 export type Context = Awaited<ReturnType<typeof createContext>>;
 const t = initTRPC.context<Context>().create();
 

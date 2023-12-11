@@ -15,9 +15,9 @@ export const addCourse = publicProcedure
   .input(addInput)
   .mutation(async (opts) => {
     const { title, des, price } = opts.input;
-    console.log(title);
+    const { prisma } = opts.ctx;
     try {
-      const add = await prisma.courses.create({
+      const add = prisma.courses.create({
         data: {
           title: title,
           des: des,
