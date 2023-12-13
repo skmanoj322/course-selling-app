@@ -13,4 +13,18 @@ const isAuthed = middleware(({ next, ctx }) => {
     },
   });
 });
+const isAdmin = middleware(({ next, ctx }) => {
+  if (ctx.session?.user.isAdmin) {
+    return next({
+      ctx: {
+        session: ctx.session,
+      },
+    });
+  }
+
+  throw new TRPCError({
+    code: "UNAUTHORIZED",
+  });
+});
 export const protectedProcedure = publicProcedure.use(isAuthed);
+export const isAdminProcedure = publicProcedure.use(isAdmin);

@@ -9,7 +9,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
  model User{
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   email String @unique
   username String @unique
   password String?
@@ -18,7 +18,7 @@ datasource db {
 
  }
  model Courses{
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   title String
   des String
   price String
@@ -26,9 +26,9 @@ datasource db {
 
  }
  model Cource_Brought{
-  customerId Int 
+  customerId String
   customer User @relation(fields: [customerId],references: [id])
-  courseId Int
+  courseId String
   course Courses @relation(fields: [courseId],references: [id])
   @@id([courseId,customerId])
  }

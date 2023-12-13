@@ -17,6 +17,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+
   pages: {
     signIn: "/login",
   },
@@ -57,27 +58,37 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
         }
+        console.log("USER", existingUser);
         return {
           id: `${existingUser.id}`,
           username: existingUser?.username,
           email: existingUser.email,
+          isAdmin: existingUser.isAdmin,
         };
       },
     }),
   ],
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        return { ...token, username: user.username };
+        console.log("asdhasjdn", user);
+        return {
+          ...token,
+
+          isAdmin: user.isAdmin,
+        };
       }
       return token;
     },
     async session({ session, token }) {
+      console.log("sessions", token);
       return {
         ...session,
         user: {
           ...session.user,
           username: token.username,
+          isAdmin: token.isAdmin,
         },
       };
     },

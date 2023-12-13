@@ -1,35 +1,31 @@
 import { z } from "zod";
-import { publicProcedure } from "./trpc";
-import { PrismaClient } from "@prisma/client";
-import { title } from "process";
-
-const prisma = new PrismaClient();
+import { isAdminProcedure } from "../middleware";
+import { getServerSession } from "next-auth";
 
 const addInput = z.object({
   title: z.string(),
   des: z.string(),
   price: z.string(),
 });
+const deleteInput = z.object({
+  courseid: z.string(),
+});
 
-export const addCourse = publicProcedure
+export const addCourse = isAdminProcedure
   .input(addInput)
   .mutation(async (opts) => {
     const { title, des, price } = opts.input;
     const { prisma } = opts.ctx;
+
     try {
-      const add = prisma.courses.create({
+      const dbData = prisma.courses.create({
         data: {
           title: title,
           des: des,
           price: price,
         },
       });
-      return {
-        status: "success",
-        data: {
-          add,
-        },
-      };
+      return dbData;
     } catch (error) {
       throw error;
     }

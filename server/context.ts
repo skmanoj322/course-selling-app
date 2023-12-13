@@ -1,11 +1,12 @@
+import { authOptions } from "@/lib/auth";
 import prisma from "@/prisma/db";
 import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { getServerSession } from "next-auth";
 type CreateContextOptions = Record<string, never>;
 
 export const createContext = async (opts: FetchCreateContextFnOptions) => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
+
   const contextInner = await createContextInner({});
   return {
     ...contextInner,
