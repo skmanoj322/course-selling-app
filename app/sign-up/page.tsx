@@ -24,7 +24,6 @@ export default function Login() {
       body: JSON.stringify(input),
     });
     const xyz = await userData.json();
-    console.log("body", xyz);
     if (userData.ok) {
       router.push("/login");
     }

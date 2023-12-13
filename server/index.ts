@@ -5,8 +5,6 @@ import { protectedProcedure } from "./middleware";
 import { showAllCourse } from "./Procedures/cources";
 export const appRouter = router({
   greetings: protectedProcedure.query(async (opts) => {
-    // console.log(opts.ctx.token);
-
     return "hello trPC";
   }),
   addCourse: addCourse,

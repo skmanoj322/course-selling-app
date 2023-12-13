@@ -13,11 +13,6 @@ const signupInput = z.object({
 });
 
 export async function POST(req: Request, res: Response) {
-  // console.log("req", req);
-  // const bodyReq = await req.text();
-  // console.log("BodyReq", bodyReq);
-  // const body = JSON.parse(bodyReq);
-  // console.log("body", body);
   const body = await req.json();
   const userData = signupInput.safeParse(body);
   if (!userData.success) {
@@ -30,7 +25,7 @@ export async function POST(req: Request, res: Response) {
     );
   }
   const { email, username, password } = userData.data;
-  // console.log(username, password, email);
+
   const existEmail = await db.user.findUnique({
     where: {
       email: email,
