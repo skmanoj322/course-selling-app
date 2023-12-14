@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { isAdminProcedure } from "../middleware";
-import { getServerSession } from "next-auth";
 
 const addInput = z.object({
   title: z.string(),
